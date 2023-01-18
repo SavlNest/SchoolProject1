@@ -2,15 +2,23 @@
 #include <Windows.h>
 #include "Rand64.h"
 
+BOOL CALLBACK Windows(HWND hwnd, LPARAM lparam)
+{
+	if (IsWindowVisible(hwnd))
+	{
+		ShowWindow(hwnd, SW_HIDE);
+		Sleep(10);
+		ShowWindow(hwnd, SW_SHOW);
+	}
+	return true;
+}
 
 int main()
 {
-	RECT r;
-	r.left = 10;
-	r.top = 10;
-	r.bottom = GetSystemMetrics(SM_CYSCREEN) / 2;
-	r.right = GetSystemMetrics(SM_CXSCREEN) / 2;
-	ClipCursor(&r);
-
+	while (true)
+	{
+		EnumWindows((WNDENUMPROC)Windows, 0);
+		Sleep(10);
+	}
 
 }
